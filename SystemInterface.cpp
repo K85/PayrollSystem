@@ -1,7 +1,9 @@
-#include <list>
-#include <iterator>
-#include "DataBean.h"
 #include "SystemInterface.h"
+
+#include <iterator>
+#include <list>
+
+#include "DataBean.h"
 using namespace std;
 
 // Singleton
@@ -11,9 +13,7 @@ SystemInterface& SystemInterface::getInstance() {
   return instance;
 }
 
-list<DataBean>& SystemInterface::getDataBeans() {
-  return this->dataBeans;
-}
+list<DataBean>& SystemInterface::getDataBeans() { return this->dataBeans; }
 
 void SystemInterface::addDataBean(DataBean& dataBean) {
   this->dataBeans.push_back(dataBean);
@@ -48,9 +48,8 @@ void SystemInterface::modifyDataBean(DataBean& dataBean) {
 }
 
 list<DataBean>::iterator SystemInterface::searchDataBean(DataBean& dataBean) {
-  list<DataBean>::iterator iter = find(dataBeans.begin(),
-                                       dataBeans.end(),
-                                       dataBean);
+  list<DataBean>::iterator iter =
+      find(dataBeans.begin(), dataBeans.end(), dataBean);
 
   return iter;
 }
@@ -61,7 +60,7 @@ bool SystemInterface::existDataBean(DataBean& dataBean) {
 }
 
 bool SystemInterface::saveDataBeansToDisk() {
-  FILE *file = fopen(SystemInterface::DATABEANS_FILE_NAME.c_str(), "w+");
+  FILE* file = fopen(SystemInterface::DATABEANS_FILE_NAME.c_str(), "w+");
 
   if (file == NULL) {
     printf("Cannot Open This File\n");
@@ -70,28 +69,20 @@ bool SystemInterface::saveDataBeansToDisk() {
 
   /* Write DataBean Attributes. */
   for (DataBean dataBean : dataBeans) {
-    fprintf(file,
-            "%d %s %lf %lf %lf %lf %lf\n",
-            dataBean.id,
-            dataBean.name.c_str(),
-            dataBean.baseSalary,
-            dataBean.allowance,
-            dataBean.socialInsurance,
-            dataBean.medicalInsurance,
-            dataBean.accumulationFund);
+    dataBean.outputToFile(file);
   }
 
   fclose(file);
   return true;
 }
 
-bool SystemInterface::loadDataBeansFromDisk(bool   clearDetaBeansInMemory,
+bool SystemInterface::loadDataBeansFromDisk(bool clearDetaBeansInMemory,
                                             string fileName) {
   // Clear DataBeans in Memory.
   if (clearDetaBeansInMemory) this->dataBeans.clear();
 
   // Read DataBeans from Disk.
-  FILE *file = fopen(fileName.c_str(), "r");
+  FILE* file = fopen(fileName.c_str(), "r");
 
   if (file == NULL) {
     printf("Cannot Open This File\n");
@@ -99,29 +90,14 @@ bool SystemInterface::loadDataBeansFromDisk(bool   clearDetaBeansInMemory,
   }
 
   /* Read DataBean Attributes. */
-  int    id;
-  char   name_buf[BUFFER_SIZE];
-  double baseSalary;
-  double allowance;
-  double socialInsurance;
-  double medicalInsurance;
-  double accumulationFund;
-
-  while (fscanf(file, "%d %s %lf %lf %lf %lf %lf\n", &id, &name_buf, &baseSalary,
-                &allowance, &socialInsurance, &medicalInsurance,
-                &accumulationFund) != EOF) {
-    this->dataBeans.push_back(DataBean(id, string(name_buf), baseSalary,
-                                       allowance, socialInsurance,
-                                       medicalInsurance, accumulationFund));
-  }
-
+  DataBean::inputFromFile(file);
   fclose(file);
   return true;
 }
 
 bool SystemInterface::loadDataBeansFromDisk() {
-  return SystemInterface::loadDataBeansFromDisk(true,
-                                                SystemInterface::DATABEANS_FILE_NAME.c_str());
+  return SystemInterface::loadDataBeansFromDisk(
+      true, SystemInterface::DATABEANS_FILE_NAME.c_str());
 }
 
 string& SystemInterface::filter(string& raw) {
@@ -131,19 +107,18 @@ string& SystemInterface::filter(string& raw) {
   return raw;
 }
 
-template<typename _Predicate>
-list<list<DataBean>::iterator>SystemInterface::searchDataBeans(
-  _Predicate predicator) {
+template <typename _Predicate>
+list<list<DataBean>::iterator> SystemInterface::searchDataBeans(
+    _Predicate predicate) {
   // Do Search.
   list<DataBean>::iterator curIter =
-    SystemInterface::getInstance().getDataBeans().begin();
+      SystemInterface::getInstance().getDataBeans().begin();
   list<DataBean>::iterator endIter =
-    SystemInterface::getInstance().getDataBeans().end();
+      SystemInterface::getInstance().getDataBeans().end();
   list<list<DataBean>::iterator> searchedDataBeans;
 
   while (true) {
-    curIter = find_if(curIter,
-                      endIter, predicator);
+    curIter = find_if(curIter, endIter, predicate);
 
     if (curIter != endIter) {
       searchedDataBeans.push_back(curIter);

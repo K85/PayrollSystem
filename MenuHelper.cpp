@@ -1,16 +1,16 @@
-#include <stdio.h>
-#include <string>
 #include "MenuHelper.h"
+
+#include <stdio.h>
+
+#include <string>
+
 #include "DataBean.h"
 #include "SystemInterface.h"
 #define BUFFER_SIZE 1024
 
-
-#pragma warning (disable:4996)
-
+#pragma warning(disable : 4996)
 
 using namespace std;
-
 
 int MenuHelper::readIntergerCommand() {
   int command;
@@ -45,32 +45,32 @@ void MenuHelper::menu_main() {
     printf("6. 计算员工\n\n");
 
     switch (readIntergerCommand()) {
-    case 1:
-      menu_add_dataBean();
-      break;
+      case 1:
+        menu_add_dataBean();
+        break;
 
-    case 2:
-      menu_delete_dataBean();
-      break;
+      case 2:
+        menu_delete_dataBean();
+        break;
 
-    case 3:
-      menu_modify_dataBean();
-      break;
+      case 3:
+        menu_modify_dataBean();
+        break;
 
-    case 4:
-      menu_search_dataBean();
-      break;
+      case 4:
+        menu_search_dataBean();
+        break;
 
-    case 5:
-      menu_list_dataBean();
-      break;
+      case 5:
+        menu_list_dataBean();
+        break;
 
-    case 6:
-      menu_calc_dataBean();
-      break;
+      case 6:
+        menu_calc_dataBean();
+        break;
 
-    default:
-      printf("错误的输入, 请重试\n");
+      default:
+        printf("错误的输入, 请重试\n");
     }
   }
 }
@@ -84,23 +84,23 @@ void MenuHelper::menu_add_dataBean() {
     printf("4. 返回\n\n");
 
     switch (readIntergerCommand()) {
-    case 1:
-      menu_add_dataBean_Single_FromConsole();
-      break;
+      case 1:
+        menu_add_dataBean_Single_FromConsole();
+        break;
 
-    case 2:
-      menu_add_dataBean_Batch_FromConsole();
-      break;
+      case 2:
+        menu_add_dataBean_Batch_FromConsole();
+        break;
 
-    case 3:
-      menu_add_dataBean_FromFile();
-      break;
+      case 3:
+        menu_add_dataBean_FromFile();
+        break;
 
-    case 4:
-      return;
+      case 4:
+        return;
 
-    default:
-      printf("错误的输入, 请重试\n");
+      default:
+        printf("错误的输入, 请重试\n");
     }
   }
 }
@@ -110,7 +110,7 @@ void MenuHelper::menu_add_dataBean_Single_FromConsole() {
   DataBean dataBean = DataBean::readDataBean();
 
   if (SystemInterface::getInstance().existDataBean(dataBean)) {
-    printf("添加失败,该员工号已存在!");
+    printf("添加失败,该员工号已存在!\n");
     return;
   }
 
@@ -123,8 +123,8 @@ void MenuHelper::menu_add_dataBean_Batch_FromConsole() {
   printf("输入 Ctrl + Z结束符进行结束\n");
 
   // Data Flow.
-  int    id;
-  char   name_buf[BUFFER_SIZE];
+  int id;
+  char name_buf[BUFFER_SIZE];
   double baseSalary;
   double allowance;
   double socialInsurance;
@@ -134,13 +134,9 @@ void MenuHelper::menu_add_dataBean_Batch_FromConsole() {
   while (scanf("%d %s %lf %lf %lf %lf %lf", &id, &name_buf, &baseSalary,
                &allowance, &socialInsurance, &medicalInsurance,
                &accumulationFund) != EOF) {
-    DataBean dataBean = DataBean(id,
-                                 string(name_buf),
-                                 baseSalary,
-                                 allowance,
-                                 socialInsurance,
-                                 medicalInsurance,
-                                 accumulationFund);
+    DataBean dataBean =
+        DataBean(id, string(name_buf), baseSalary, allowance, socialInsurance,
+                 medicalInsurance, accumulationFund);
     SystemInterface::getInstance().addDataBean(dataBean);
     printf("添加成功, 请输入下一个\n");
   }
@@ -167,13 +163,13 @@ void MenuHelper::menu_delete_dataBean() {
 
   // DataBean ID Exist ?
   if (!SystemInterface::getInstance().existDataBean(dataBean)) {
-    printf("删除失败, 该员工号不存在!");
+    printf("删除失败, 该员工号不存在!\n");
     return;
   }
 
   // Delete DataBean.
   SystemInterface::getInstance().deleteDataBean(dataBean);
-  printf("删除成功!");
+  printf("删除成功!\n");
 }
 
 void MenuHelper::menu_modify_dataBean() {
@@ -183,7 +179,7 @@ void MenuHelper::menu_modify_dataBean() {
   DataBean dataBean(id);
 
   if (!SystemInterface::getInstance().existDataBean(dataBean)) {
-    printf("员工号不存在.");
+    printf("员工号不存在.\n");
     return;
   }
 
@@ -201,19 +197,18 @@ void MenuHelper::menu_search_dataBean() {
     printf("3. 返回\n\n");
 
     switch (readIntergerCommand()) {
-    case 1:
-      menu_searchByID_dataBean();
-      break;
+      case 1:
+        menu_searchByID_dataBean();
+        break;
+      case 2:
+        menu_searchByName_dataBean();
+        break;
 
-    case 2:
-      menu_searchByName_dataBean();
-      break;
+      case 3:
+        return;
 
-    case 3:
-      return;
-
-    default:
-      printf("错误的输入, 请重试\n");
+      default:
+        printf("错误的输入, 请重试\n");
     }
   }
 }
@@ -247,8 +242,8 @@ void MenuHelper::menu_searchByID_dataBean() {
     return;
   }
 
-  list<DataBean>::iterator iter = SystemInterface::getInstance().searchDataBean(
-    dataBean);
+  list<DataBean>::iterator iter =
+      SystemInterface::getInstance().searchDataBean(dataBean);
 
   iter->printDataBean();
 }
@@ -256,7 +251,7 @@ void MenuHelper::menu_searchByID_dataBean() {
 void MenuHelper::menu_searchByName_dataBean() {
   // Get Operate DataBean Name.
   printf("请输入要查询的员工姓名: \n");
-  string   name = readStringCommand();
+  string name = readStringCommand();
   DataBean dataBean(name);
 
   if (!SystemInterface::getInstance().existDataBean(dataBean)) {
@@ -264,8 +259,8 @@ void MenuHelper::menu_searchByName_dataBean() {
     return;
   }
 
-  list<DataBean>::iterator iter = SystemInterface::getInstance().searchDataBean(
-    dataBean);
+  list<DataBean>::iterator iter =
+      SystemInterface::getInstance().searchDataBean(dataBean);
 
   iter->printDataBean();
 }
@@ -282,8 +277,8 @@ void MenuHelper::menu_calc_dataBean() {
   }
 
   // Calc and Save Results
-  list<DataBean>::iterator iter = SystemInterface::getInstance().searchDataBean(
-    dataBean);
+  list<DataBean>::iterator iter =
+      SystemInterface::getInstance().searchDataBean(dataBean);
 
   iter->calcAndSaveToDisk();
 

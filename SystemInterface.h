@@ -1,63 +1,39 @@
 #pragma once
-#include "DataBean.h"
 #include <list>
 #include <string>
+
+#include "DataBean.h"
 using namespace std;
 class SystemInterface {
-private:
-
+ private:
   const string DATABEANS_FILE_NAME = "DataBeans.dat";
-  list<DataBean>dataBeans;
 
+  list<DataBean> dataBeans;
+
+ public:
   // Singleton
-
-public:
-
   static SystemInterface& getInstance();
-
-public:
 
   list<DataBean>& getDataBeans();
 
-public:
-
   void addDataBean(DataBean& dataBean);
-
-public:
 
   void deleteDataBean(DataBean& dataBean);
 
-public:
-
   void modifyDataBean(DataBean& dataBean);
-
-public:
 
   list<DataBean>::iterator searchDataBean(DataBean& dataBean);
 
-public:
-
   bool existDataBean(DataBean& dataBean);
-
-public:
 
   bool saveDataBeansToDisk();
 
-public:
-
   bool loadDataBeansFromDisk();
 
-public:
-
-  bool loadDataBeansFromDisk(bool   clearDetaBeansInMemory,
-                             string fileName);
-
-public:
+  bool loadDataBeansFromDisk(bool clearDetaBeansInMemory, string fileName);
 
   static string& filter(string& raw);
 
-public:
-
-  template<typename _Predicate>
-  list<list<DataBean>::iterator>searchDataBeans(_Predicate pridicator);
+  template <typename _Predicate>
+  list<list<DataBean>::iterator> searchDataBeans(_Predicate predicate);
 };
