@@ -25,9 +25,9 @@ class MenuHelper {
 
   void menu_modify_dataBean();
 
-  void menu_search_dataBean();
-
   void menu_list_dataBean();
+
+  void menu_search_dataBean();
 
   void menu_searchByID_dataBean();
 

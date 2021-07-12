@@ -7,7 +7,7 @@ SOURCES += \
         DataBean.cpp \
         MenuHelper.cpp \
         SystemInterface.cpp \
-        SystemMain.cpp
+        main.cpp
 
 HEADERS += \
     DataBean.h \
