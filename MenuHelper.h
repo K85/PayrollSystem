@@ -4,54 +4,63 @@
 using namespace std;
 
 class MenuHelper {
+public:
+
+  static int readIntergerCommand();
 
 public:
-    static int readIntergerCommand();
+
+  static string readStringCommand();
 
 public:
-    static string readStringCommand();
+
+  static double readDoubleCommand();
 
 public:
-    static double readDoubleCommand();
 
-
-public:
-    void menu_main();
+  void menu_main();
 
 public:
-    void menu_add_dataBean();
+
+  void menu_add_dataBean();
 
 public:
-    void menu_add_dataBean_Single_FromConsole();
+
+  void menu_add_dataBean_Single_FromConsole();
 
 public:
-    void menu_add_dataBean_Batch_FromConsole();
+
+  void menu_add_dataBean_Batch_FromConsole();
 
 public:
-    void menu_add_dataBean_FromFile();
+
+  void menu_add_dataBean_FromFile();
 
 public:
-    void menu_delete_dataBean();
+
+  void menu_delete_dataBean();
 
 public:
-    void menu_modify_dataBean();
+
+  void menu_modify_dataBean();
 
 public:
-    void menu_search_dataBean();
+
+  void menu_search_dataBean();
 
 public:
-    void menu_list_dataBean();
+
+  void menu_list_dataBean();
 
 public:
-    void menu_searchByID_dataBean();
+
+  void menu_searchByID_dataBean();
 
 public:
-    void menu_searchByName_dataBean();
+
+  void menu_searchByName_dataBean();
 
 public:
-    void menu_calc_dataBean();
+
+  void menu_calc_dataBean();
 };
-
-
-
-

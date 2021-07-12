@@ -1,41 +1,63 @@
 #pragma once
 #include "DataBean.h"
-#include <vector>
+#include <list>
 #include <string>
 using namespace std;
 class SystemInterface {
-
 private:
-    vector<DataBean> dataBeans;
 
-// Singleton
-public:
-    static SystemInterface & getInstance();
-public:
-    vector<DataBean> & getDataBeans();
+  const string DATABEANS_FILE_NAME = "DataBeans.dat";
+  list<DataBean>dataBeans;
+
+  // Singleton
 
 public:
-    void addDataBean(DataBean dataBean);
+
+  static SystemInterface& getInstance();
 
 public:
-    void deleteDataBean(DataBean dataBean);
+
+  list<DataBean>& getDataBeans();
 
 public:
-    void modifyDataBean(DataBean dataBean);
+
+  void addDataBean(DataBean& dataBean);
 
 public:
-    vector<DataBean>::iterator searchDataBean(DataBean dataBean);
+
+  void deleteDataBean(DataBean& dataBean);
 
 public:
-    bool existDataBean(DataBean dataBean);
+
+  void modifyDataBean(DataBean& dataBean);
 
 public:
-    void saveDataBeansToDisk();
+
+  list<DataBean>::iterator searchDataBean(DataBean& dataBean);
 
 public:
-    void loadDataBeansFromDisk();
+
+  bool existDataBean(DataBean& dataBean);
 
 public:
-    void loadDataBeansFromDisk(bool clearDetaBeansInMemory, string fileName);
+
+  bool saveDataBeansToDisk();
+
+public:
+
+  bool loadDataBeansFromDisk();
+
+public:
+
+  bool loadDataBeansFromDisk(bool   clearDetaBeansInMemory,
+                             string fileName);
+
+public:
+
+  static string& filter(string& raw);
+
+public:
+
+  template<typename _Predicate>
+  list<list<DataBean>::iterator>searchDataBeans(_Predicate pridicator);
 };
-
