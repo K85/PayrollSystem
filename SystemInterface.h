@@ -32,8 +32,12 @@ class SystemInterface {
 
   bool loadDataBeansFromDisk(bool clearDetaBeansInMemory, string fileName);
 
-  static string& filter(string& raw);
-
   template <typename _Predicate>
   list<list<DataBean>::iterator> searchDataBeans(_Predicate predicate);
+
+  static string& filter(string& raw);
+
+  static string& trim(string& str);
+
+  static bool matchRegex(string text, string reg);
 };

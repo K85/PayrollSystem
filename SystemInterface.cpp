@@ -2,6 +2,7 @@
 
 #include <iterator>
 #include <list>
+#include <regex>
 
 #include "DataBean.h"
 using namespace std;
@@ -128,4 +129,18 @@ list<list<DataBean>::iterator> SystemInterface::searchDataBeans(
   }
 
   return searchedDataBeans;
+}
+
+bool SystemInterface::matchRegex(string text, string reg) {
+  return std::regex_match(text, regex(reg));
+}
+
+string& SystemInterface::trim(string& str) {
+  if (str.empty()) {
+    return str;
+  }
+
+  str.erase(0, str.find_first_not_of(" "));
+  str.erase(str.find_last_not_of(" ") + 1);
+  return str;
 }
