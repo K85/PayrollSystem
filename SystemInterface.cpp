@@ -24,8 +24,8 @@ void SystemInterface::addDataBean(DataBean& dataBean) {
 }
 
 void SystemInterface::deleteDataBean(DataBean& dataBean) {
-  for (list<DataBean>::iterator iter = this->dataBeans.begin();
-       iter != this->dataBeans.end(); iter++) {
+  for (auto iter = this->dataBeans.begin(); iter != this->dataBeans.end();
+       iter++) {
     // Use Operator ==
     if (*iter == dataBean) {
       this->dataBeans.erase(iter);
@@ -39,7 +39,7 @@ void SystemInterface::deleteDataBean(DataBean& dataBean) {
 
 void SystemInterface::modifyDataBean(DataBean& dataBean) {
   // Find DataBean By PrimaryKey.
-  list<DataBean>::iterator iter = searchDataBean(dataBean);
+  auto iter = searchDataBean(dataBean);
 
   // Modify DataBean (Using Assignment Constructor).
   *iter = dataBean;
@@ -49,8 +49,7 @@ void SystemInterface::modifyDataBean(DataBean& dataBean) {
 }
 
 list<DataBean>::iterator SystemInterface::searchDataBean(DataBean& dataBean) {
-  list<DataBean>::iterator iter =
-      find(dataBeans.begin(), dataBeans.end(), dataBean);
+  auto iter = find(dataBeans.begin(), dataBeans.end(), dataBean);
 
   return iter;
 }
@@ -112,10 +111,8 @@ template <typename _Predicate>
 list<list<DataBean>::iterator> SystemInterface::searchDataBeans(
     _Predicate predicate) {
   // Do Search.
-  list<DataBean>::iterator curIter =
-      SystemInterface::getInstance().getDataBeans().begin();
-  list<DataBean>::iterator endIter =
-      SystemInterface::getInstance().getDataBeans().end();
+  auto curIter = SystemInterface::getInstance().getDataBeans().begin();
+  auto endIter = SystemInterface::getInstance().getDataBeans().end();
   list<list<DataBean>::iterator> searchedDataBeans;
 
   while (true) {

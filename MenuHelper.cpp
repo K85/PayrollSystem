@@ -242,8 +242,7 @@ void MenuHelper::menu_searchByID_dataBean() {
     return;
   }
 
-  list<DataBean>::iterator iter =
-      SystemInterface::getInstance().searchDataBean(dataBean);
+  auto iter = SystemInterface::getInstance().searchDataBean(dataBean);
 
   iter->printDataBean();
 }
@@ -259,8 +258,7 @@ void MenuHelper::menu_searchByName_dataBean() {
     return;
   }
 
-  list<DataBean>::iterator iter =
-      SystemInterface::getInstance().searchDataBean(dataBean);
+  auto iter = SystemInterface::getInstance().searchDataBean(dataBean);
 
   iter->printDataBean();
 }
@@ -277,8 +275,7 @@ void MenuHelper::menu_calc_dataBean() {
   }
 
   // Calc and Save Results
-  list<DataBean>::iterator iter =
-      SystemInterface::getInstance().searchDataBean(dataBean);
+  auto iter = SystemInterface::getInstance().searchDataBean(dataBean);
 
   iter->calcAndSaveToDisk();
 
